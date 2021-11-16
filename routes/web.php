@@ -16,6 +16,8 @@ use App\Http\Controllers;
 
 Route::get('/', [Controllers\HomeController::class, 'index']) ->name('home');
 
+Route::get('/post/{post}', [Controllers\PostController::class, 'show']) ->name('post.show');
+
 Route::get('/publish', [Controllers\PostController::class, 'create']) ->name('post.create');
 
 Route::post('/publish', [Controllers\PostController::class, 'store']);

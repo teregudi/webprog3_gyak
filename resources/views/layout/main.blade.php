@@ -42,7 +42,7 @@
   <body>
     @include('layout._header')
 
-    <main class="container">
+    <main class="container mt-5 mb-4"> <!-- bootstrap izé, margo top 5... -->
         @yield('content')
     </main>
 
