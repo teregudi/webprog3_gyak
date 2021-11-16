@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Post;
 use App\Models\Topic;
+use App\Http\Requests\PostRequest;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -27,20 +29,26 @@ class PostController extends Controller
     {
         $topic_options = Topic::all();
 
-        dd($topic_options);
-
-        return view('post.create');
+        return view('post.create')->with([
+            'topic_options' => $topic_options
+        ]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Requests\PostRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PostRequest $request)
     {
-        //
+        //itt kellene majd egy autorizáció az alábbi módon:
+        //Auth::user()
+        //ehelyett most csalunk:
+        $authUser = User::first();
+        $authuser = ['author_id' => 1];
+        $post = $authUser->posts()->create($request->except(['_token']));
+        return redirect()->route('post.show');
     }
 
     /**
@@ -51,7 +59,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        //
+        return view('post.show')->with(compact('post'));
     }
 
     /**
